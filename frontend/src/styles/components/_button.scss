@@ -1,0 +1,50 @@
+// ============================================
+// BUTTON COMPONENT - ChattyChat
+// ============================================
+
+@use '../utils' as *;
+
+
+.btn {
+    @include button-base;
+    
+    // Variants
+    &--primary {
+      @include gradient-primary;
+      color: $color-white;
+    }
+    
+    &--secondary {
+      background: $light-border;
+      color: $light-text-primary;
+      
+      body.dark-mode & {
+        background: $dark-bg-secondary;
+        color: $dark-text-primary;
+      }
+    }
+    
+    &--danger {
+      background: $color-danger;
+      color: $color-white;
+      
+      &:hover {
+        background: $color-danger-dark;
+      }
+    }
+    &--disabled {
+      background: $color-gray-100;
+      color: $color-gray-300;
+      cursor: not-allowed;
+    }    
+    &--clear {
+      background: transparent;
+      color: $color-primary;
+      border: $border-width solid $color-primary;
+      
+      body.dark-mode & {
+        color: $color-purple;
+        border-color: $color-purple;
+      }
+    }
+  }

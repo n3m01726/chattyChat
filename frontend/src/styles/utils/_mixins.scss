@@ -1,0 +1,262 @@
+// ============================================
+// MIXINS - ChattyChat
+// ============================================
+
+// ============================================
+// RESPONSIVE BREAKPOINTS
+// ============================================
+@use '../utils/variables' as *;
+
+@mixin respond-to($breakpoint) {
+    @if $breakpoint == xs {
+      @media (min-width: $breakpoint-xs) { @content; }
+    }
+    @else if $breakpoint == sm {
+      @media (min-width: $breakpoint-sm) { @content; }
+    }
+    @else if $breakpoint == md {
+      @media (min-width: $breakpoint-md) { @content; }
+    }
+    @else if $breakpoint == lg {
+      @media (min-width: $breakpoint-lg) { @content; }
+    }
+    @else if $breakpoint == xl {
+      @media (min-width: $breakpoint-xl) { @content; }
+    }
+    @else if $breakpoint == 2xl {
+      @media (min-width: $breakpoint-2xl) { @content; }
+    }
+  }
+  
+  // ============================================
+  // FLEXBOX
+  // ============================================
+  @mixin flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  @mixin flex-start{
+    display: flex-start;
+    align-items: left;
+    justify-content: left;
+  }
+  
+  @mixin flex-between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  @mixin flex-column {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  // ============================================
+  // TRANSITIONS
+  // ============================================
+  @mixin transition($properties...) {
+    transition: $properties;
+  }
+  
+  @mixin smooth-transition($property: all) {
+    transition: $property $transition-base;
+  }
+  
+  // ============================================
+  // HOVER EFFECTS
+  // ============================================
+  @mixin hover-lift {
+    transition: transform $transition-fast;
+    
+    &:hover {
+      transform: translateY(-2px);
+    }
+  }
+  
+  @mixin hover-scale($scale: 1.05) {
+    transition: transform $transition-fast;
+    
+    &:hover {
+      transform: scale($scale);
+    }
+  }
+  
+  @mixin hover-opacity($opacity: 0.7) {
+    transition: opacity $transition-fast;
+    
+    &:hover {
+      opacity: $opacity;
+    }
+  }
+  
+  // ============================================
+  // TYPOGRAPHY
+  // ============================================
+  @mixin text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  @mixin text-uppercase {
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  // ============================================
+  // POSITIONING
+  // ============================================
+  @mixin absolute-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  @mixin absolute-cover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+  
+  // ============================================
+  // SCROLLBAR CUSTOM
+  // ============================================
+  @mixin custom-scrollbar($track-bg, $thumb-bg, $thumb-hover-bg) {
+    &::-webkit-scrollbar {
+      width: $scrollbar-width;
+    }
+    
+    &::-webkit-scrollbar-track {
+      background: $track-bg;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+      background: $thumb-bg;
+      border-radius: $border-radius-sm;
+      
+      &:hover {
+        background: $thumb-hover-bg;
+      }
+    }
+  }
+  
+  // ============================================
+  // ANIMATIONS
+  // ============================================
+  @mixin fade-in($duration: $transition-base) {
+    animation: fadeIn $duration ease-out;
+  }
+  
+  @mixin slide-up($duration: $transition-base) {
+    animation: slideUp $duration ease-out;
+  }
+  
+  // ============================================
+  // GRADIENTS
+  // ============================================
+  @mixin gradient-primary {
+    background: linear-gradient(135deg, $color-primary 0%, $color-secondary 100%);
+  }
+  
+  @mixin gradient-dark {
+    background: linear-gradient(135deg, #4a4a62 0%, #3a3a52 100%);
+  }
+  
+  // ============================================
+  // BUTTONS
+  // ============================================
+  @mixin button-reset {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    font: inherit;
+  }
+  
+  @mixin button-base {
+    padding: $spacing-md $spacing-xl;
+    border: none;
+    border-radius: $border-radius-md;
+    font-weight: $font-weight-semibold;
+    cursor: pointer;
+    @include smooth-transition(transform);
+    
+    &:hover {
+      transform: translateY(-2px);
+    }
+    
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+  }
+  
+  // ============================================
+  // CARDS
+  // ============================================
+  @mixin card {
+    background: $light-bg-container;
+    border-radius: $border-radius-xl;
+    box-shadow: $shadow-xl;
+    
+    body.dark-mode & {
+      background: $dark-bg-container;
+    }
+  }
+  
+  // ============================================
+  // INPUT FIELDS
+  // ============================================
+  @mixin input-base {
+    padding: $spacing-md $spacing-lg;
+    border: $border-width-thick solid $light-border;
+    border-radius: $border-radius-md;
+    font-size: $font-size-base;
+    @include smooth-transition(border-color);
+    
+    &:focus {
+      outline: none;
+      border-color: $color-primary;
+    }
+    
+    body.dark-mode & {
+      background: $dark-bg-input;
+      border-color: $dark-border-secondary;
+      color: $dark-text-primary;
+    }
+  }
+  
+  // ============================================
+  // MODAL
+  // ============================================
+  @mixin modal-overlay {
+    @include absolute-cover;
+    @include flex-center;
+    background: rgba($color-black, 0.7);
+    z-index: $z-index-modal;
+    @include fade-in;
+  }
+  
+  @mixin modal-content {
+    background: $light-bg-container;
+    border-radius: $border-radius-xl;
+    padding: $spacing-2xl;
+    max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+    @include slide-up;
+    
+    body.dark-mode & {
+      background: $dark-bg-container;
+      color: $dark-text-primary;
+    }
+  }

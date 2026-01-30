@@ -1,0 +1,152 @@
+// ============================================
+// HEADER LAYOUT - ChattyChat
+// ============================================
+
+@use '../utils' as *;
+
+
+// Global Header (Top Bar)
+.app-header {
+  @include gradient-primary;
+  color: $color-white;
+  height: $header-height;
+  @include flex-between;
+  padding: 0 $spacing-2xl;
+  position: sticky;
+  top: 0;
+  z-index: z('dropdown');
+  @include smooth-transition(background);
+  
+  body.dark-mode & {
+    @include gradient-dark;
+  }
+  
+  &__left {
+    @include flex-center;
+    gap: $spacing-lg;
+  }
+  
+  &__channel-info {
+    h1 {
+      font-size: $font-size-2xl;
+      margin: 0;
+    }
+    
+    p {
+      font-size: $font-size-sm;
+      margin: $spacing-xs 0 0 0;
+      opacity: 0.8;
+    }
+  }
+  
+  &__right {
+    @include flex-center;
+    gap: $spacing-lg;
+  }
+  
+  &__user-count {
+    @include flex-center;
+    gap: $spacing-sm;
+    font-size: $font-size-base;
+    padding: $spacing-sm $spacing-md;
+    background: opacity($color-white, 0.1);
+    border-radius: $border-radius-2xl;
+  }
+  
+  &__members-btn {
+    @include button-reset;
+    @include flex-center;
+    gap: $spacing-sm;
+    padding: $spacing-sm $spacing-lg;
+    background: opacity($color-white, 0.1);
+    color: $color-white;
+    border-radius: $border-radius-md;
+    font-size: $font-size-base;
+    font-weight: $font-weight-semibold;
+    @include smooth-transition(all);
+    
+    &:hover {
+      background: opacity($color-white, 0.2);
+    }
+  }
+}
+
+// Old chat header (kept for compatibility, but can be removed)
+.chat-header {
+  @include gradient-primary;
+  color: $color-white;
+  padding: $spacing-xl;
+  @include flex-between;
+  @include smooth-transition(background);
+  
+  body.dark-mode & {
+    @include gradient-dark;
+  }
+  
+  h2 {
+    font-size: $font-size-2xl;
+  }
+  
+  .channel-description {
+    display: block;
+    font-size: $font-size-sm;
+    opacity: 0.8;
+    margin-top: $spacing-xs;
+  }
+}
+
+.user-info {
+  display: flex;
+  gap: $spacing-lg;
+  align-items: center;
+}
+
+.current-user {
+  @include flex-center;
+  gap: $spacing-sm;
+  cursor: pointer;
+  padding: $spacing-xs $spacing-sm;
+  border-radius: $border-radius-md;
+  @include smooth-transition(background);
+  
+  &:hover {
+    background: opacity($color-white, 0.1);
+  }
+}
+
+.username-badge {
+  background: opacity($color-white, 0.2);
+  padding: $spacing-sm $spacing-md;
+  border-radius: $border-radius-3xl;
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+}
+
+.user-count {
+  font-size: $font-size-base;
+}
+
+.dark-mode-toggle {
+  background: opacity($color-black, 0.1);
+  border: none;
+  border-radius: $border-radius-full;
+  width: 40px;
+  height: 40px;
+  font-size: $font-size-xl;
+  cursor: pointer;
+  @include flex-center;
+  @include smooth-transition(all);
+  
+  &:hover {
+    transform: scale(1.1);
+    background: opacity($color-black, 0.2);
+  }
+  
+  body.dark-mode & {
+    background: opacity($color-white, 0.1);
+    
+    &:hover {
+      background: opacity($color-white, 0.2);
+    }
+  }
+}

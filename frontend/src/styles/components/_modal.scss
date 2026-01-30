@@ -1,0 +1,44 @@
+// ============================================
+// MODAL COMPONENT - ChattyChat
+// ============================================
+
+@use '../utils' as *;
+
+
+.modal {
+    &__overlay {
+      @include modal-overlay;
+    }
+    
+    &__content {
+      @include modal-content;
+    }
+    
+    &__close {
+      position: absolute;
+      top: $spacing-lg;
+      right: $spacing-lg;
+      background: opacity($color-black, 0.1);
+      border: none;
+      border-radius: $border-radius-full;
+      width: 32px;
+      height: 32px;
+      font-size: $font-size-xl;
+      cursor: pointer;
+      @include flex-center;
+      @include smooth-transition(all);
+      
+      &:hover {
+        background: opacity($color-black, 0.2);
+        transform: rotate(90deg);
+      }
+      
+      body.dark-mode & {
+        background: opacity($color-white, 0.1);
+        
+        &:hover {
+          background: opacity($color-white, 0.2);
+        }
+      }
+    }
+  }

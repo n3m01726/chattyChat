@@ -1,0 +1,107 @@
+// ============================================
+// FOOTER LAYOUT - ChattyChat
+// ============================================
+@use 'sass:color';
+@use '../utils' as *;
+
+
+.app-footer {
+  background: $light-bg-container;
+  height: $footer-height;
+  border-top: $border-width solid $light-border;
+  @include flex-between;
+  padding: 0 $spacing-2xl;
+  position: sticky;
+  bottom: 0;
+  z-index: z('dropdown');
+  @include smooth-transition(all);
+  
+  body.dark-mode & {
+    background: $dark-bg-container;
+    border-top-color: $dark-border;
+  }
+  
+  &__left {
+    @include flex-center;
+    gap: $spacing-lg;
+  }
+  
+  &__user {
+    @include flex-center;
+    gap: $spacing-md;
+    cursor: pointer;
+    padding: $spacing-sm $spacing-md;
+    border-radius: $border-radius-md;
+    @include smooth-transition(background);
+    
+    &:hover {
+      background: $light-bg-messages;
+      
+      body.dark-mode & {
+        background: $dark-bg-messages;
+      }
+    }
+  }
+  
+  &__username {
+    font-weight: $font-weight-semibold;
+    font-size: $font-size-base;
+  }
+  
+&__statusText {
+    font-size: $font-size-sm;
+    color: $light-text-primary;
+    font-style: italic;
+    
+    body.dark-mode & {
+      color: $dark-text-secondary;
+    }
+  }
+
+  &__actions {
+    @include flex-center;
+    gap: $spacing-md;
+  }
+  
+  &__btn {
+    @include button-reset;
+    @include flex-center;
+    width: 40px;
+    height: 40px;
+    border-radius: $border-radius-md;
+    background: $light-bg-messages;
+    color: $light-text-primary;
+    font-size: $font-size-xl;
+    @include smooth-transition(all);
+    
+    &:hover {
+      background: $light-border;
+      transform: scale(1.05);
+    }
+    
+    body.dark-mode & {
+      background: $dark-bg-messages;
+      color: $dark-text-primary;
+      
+      &:hover {
+        background: $dark-border;
+      }
+    }
+    
+    &--logout {
+      &:hover {
+        background: color.scale($color-danger, $lightness: 40%);
+        color: $color-danger;
+        
+        body.dark-mode & {
+          background: opacity($color-danger, 0.2);
+          color: $color-danger;
+        }
+      }
+    }
+  }
+  
+  // &__right {
+    // Pour futur usage (notifications, etc.)
+ // }
+}

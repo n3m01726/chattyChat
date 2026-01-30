@@ -1,0 +1,318 @@
+// ============================================
+// MENTIONS FEATURE - ChattyChat
+// ============================================
+
+// ============================================
+// MENTION AUTOCOMPLETE
+// ============================================
+@use '../utils' as *;
+
+.mention-autocomplete {
+    position: fixed;
+    bottom: 80px;
+    left: 20px;
+    right: 20px;
+    max-width: 400px;
+    max-height: 300px;
+    overflow-y: auto;
+    display: flex;
+    
+    background: $light-bg-container;
+    border: $border-width solid $light-border;
+    border-radius: $border-radius-lg;
+    box-shadow: $shadow-xl;
+    z-index: $z-index-dropdown;
+    
+    @include slide-up;
+    @include custom-scrollbar($color-gray-100, $color-gray-300, $color-gray-400);
+    
+    body.dark-mode & {
+      background: $dark-bg-container;
+      border-color: $dark-border;
+      @include custom-scrollbar($dark-bg-container, $dark-border-secondary, #5a5a72);
+    }
+    
+    &__empty {
+      padding: $spacing-xl;
+      text-align: center;
+      color: $light-text-muted;
+      font-size: $font-size-sm;
+      
+      body.dark-mode & {
+        color: $dark-text-secondary;
+      }
+    }
+    
+    &__section {
+      &:not(:last-child) {
+        border-bottom: $border-width solid $light-border;
+        
+        body.dark-mode & {
+          border-bottom-color: $dark-border;
+        }
+      }
+    }
+    
+    &__section-header {
+      padding: $spacing-sm $spacing-md;
+      font-size: $font-size-xs;
+      font-weight: $font-weight-semibold;
+      color: $light-text-muted;
+      @include text-uppercase;
+      background: $light-bg-messages;
+      
+      body.dark-mode & {
+        color: $dark-text-secondary;
+        background: $dark-bg-messages;
+      }
+    }
+    
+    &__item {
+      @include flex-center;
+      gap: $spacing-md;
+      padding: $spacing-sm $spacing-md;
+      cursor: pointer;
+      @include smooth-transition(all);
+      
+      &:hover,
+      &--selected {
+        background: $light-bg-messages;
+        
+        body.dark-mode & {
+          background: $dark-bg-messages;
+        }
+      }
+      
+      &--selected {
+        border-left: 3px solid $color-primary;
+        
+        body.dark-mode & {
+          border-left-color: $color-purple;
+        }
+      }
+    }
+    
+    &__avatar {
+      position: relative;
+      flex-shrink: 0;
+    }
+    
+    &__status {
+      position: absolute;
+      bottom: -2px;
+      right: -2px;
+      width: 10px;
+      height: 10px;
+      border-radius: $border-radius-full;
+      border: 2px solid $light-bg-container;
+      
+      body.dark-mode & {
+        border-color: $dark-bg-container;
+      }
+      
+      &--online { background: $color-success; }
+      &--away { background: $color-warning; }
+      &--busy { background: $color-danger; }
+      &--offline { background: $color-gray-400; }
+    }
+    
+    &__info {
+      flex: 1;
+      min-width: 0;
+    }
+    
+    &__name {
+      font-weight: $font-weight-semibold;
+      font-size: $font-size-base;
+      @include text-truncate;
+    }
+    
+    &__username {
+      font-size: $font-size-sm;
+      color: $light-text-muted;
+      @include text-truncate;
+      
+      body.dark-mode & {
+        color: $dark-text-secondary;
+      }
+    }
+  }
+  
+  // ============================================
+  // MENTION IN MESSAGE
+  // ============================================
+  .message {
+    &__mention {
+      display: inline;
+      background: opacity($color-primary, 0.1);
+      color: $color-primary;
+      padding: 2px 4px;
+      border-radius: $border-radius-sm;
+      font-weight: $font-weight-semibold;
+      
+      @include smooth-transition(all);
+      
+      &:hover {
+        background: opacity($color-primary, 0.2);
+        text-decoration: underline;
+        cursor: pointer;
+      }
+      
+      body.dark-mode & {
+        background: opacity($color-purple, 0.2);
+        color: $color-purple;
+        
+        &:hover {
+          background: opacity($color-purple, 0.3);
+        }
+      }
+    }
+    
+    // Highlight du message quand on est mentionné
+    &--mentioned {
+      .message__bubble {
+        border-left: 3px solid $color-primary;
+        background: opacity($color-primary, 0.05);
+        
+        body.dark-mode & {
+          border-left-color: $color-purple;
+          background: opacity($color-purple, 0.1);
+        }
+      }
+    }
+    
+    // Flash temporaire quand on navigue vers un message
+    &--flash, &__bubble {
+        animation: flashMessage 2s ease-out;
+      }
+      
+      body.dark-mode &--flash, &__bubble {
+        animation: flashMessageDark 2s ease-out;
+      }
+  
+  @keyframes flashMessage {
+    0%, 100% { background: inherit; }
+    50% { background: opacity($color-primary, 0.2); }
+  }
+  
+  @keyframes flashMessageDark {
+    0%, 100% { background: inherit; }
+    50% { background: opacity($color-purple, 0.3); }
+  }
+  
+  
+  // ============================================
+  // MENTION TOAST NOTIFICATIONS
+  // ============================================
+  .mention-toast-container {
+    position: fixed;
+    top: $header-height + $spacing-xl;
+    right: $spacing-xl;
+    z-index: $z-index-notification;
+    @include flex-column;
+    gap: $spacing-md;
+    pointer-events: none;
+    
+    > * {
+      pointer-events: auto;
+    }
+  }
+  
+  .mention-toast {
+    @include flex-center;
+    gap: $spacing-md;
+    
+    background: $light-bg-container;
+    border: $border-width solid $light-border;
+    border-left: 4px solid $color-primary;
+    border-radius: $border-radius-lg;
+    padding: $spacing-md $spacing-lg;
+    
+    min-width: 300px;
+    max-width: 400px;
+    
+    box-shadow: $shadow-xl;
+    cursor: pointer;
+    
+    @include slide-up;
+    @include smooth-transition(all);
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba($color-black, 0.15);
+    }
+    
+    body.dark-mode & {
+      background: $dark-bg-container;
+      border-color: $dark-border;
+      border-left-color: $color-purple;
+      
+      &:hover {
+        box-shadow: 0 8px 24px rgba($color-black, 0.5);
+      }
+    }
+    
+    &__icon {
+      @include flex-center;
+      width: 40px;
+      height: 40px;
+      border-radius: $border-radius-full;
+      background: opacity($color-primary, 0.1);
+      color: $color-primary;
+      flex-shrink: 0;
+      
+      body.dark-mode & {
+        background: opacity($color-purple, 0.2);
+        color: $color-purple;
+      }
+    }
+    
+    &__content {
+      flex: 1;
+      min-width: 0;
+    }
+    
+    &__title {
+      font-size: $font-size-base;
+      margin-bottom: $spacing-xs;
+      
+      strong {
+        color: $color-primary;
+        
+        body.dark-mode & {
+          color: $color-purple;
+        }
+      }
+    }
+    
+    &__message {
+      font-size: $font-size-sm;
+      color: $light-text-muted;
+      @include text-truncate;
+      
+      body.dark-mode & {
+        color: $dark-text-secondary;
+      }
+    }
+    
+    &__close {
+      @include button-reset;
+      @include flex-center;
+      width: 24px;
+      height: 24px;
+      border-radius: $border-radius-full;
+      color: $light-text-muted;
+      flex-shrink: 0;
+      @include smooth-transition(all);
+      
+      &:hover {
+        background: $light-bg-messages;
+        color: $light-text-primary;
+        
+        body.dark-mode & {
+          background: $dark-bg-messages;
+          color: $dark-text-primary;
+        }
+      }
+    }
+  } }

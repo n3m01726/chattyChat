@@ -1,0 +1,45 @@
+// ============================================
+// AVATAR COMPONENT - ChattyChat
+// ============================================
+
+@use '../utils' as *;
+
+.avatar {
+    border-radius: $border-radius-full;
+    @include flex-center;
+    font-weight: $font-weight-semibold;
+    color: $color-white;
+    flex-shrink: 0;
+    user-select: none;
+    box-shadow: $shadow-sm;
+    
+    
+    // Sizes
+    &--small {
+      width: $avatar-size-sm;
+      height: $avatar-size-sm;
+      font-size: $font-size-sm;
+    }
+    
+    &--medium {
+      width: $avatar-size-md;
+      height: $avatar-size-md;
+      font-size: $font-size-lg;
+    }
+    
+    &--large {
+      width: $avatar-size-lg;
+      height: $avatar-size-lg;
+      font-size: $font-size-xl;
+    }
+    
+    // Clickable variant
+    &--clickable {
+      cursor: pointer;
+      @include transition(transform $transition-fast);
+      
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+  }

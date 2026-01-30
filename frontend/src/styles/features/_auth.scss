@@ -1,0 +1,206 @@
+// ============================================
+// AUTH FEATURE (Login/Register) - ChattyChat
+// ============================================
+@use 'sass:color';
+@use '../utils' as *;
+
+
+.login-screen {
+  @include card;
+  padding: $spacing-3xl;
+  text-align: center;
+  max-width: 450px;
+  width: 100%;
+  position: relative;
+  
+  h1 {
+    margin-bottom: $spacing-2xl;
+    color: $light-text-primary;
+    font-size: $font-size-3xl;
+    @include smooth-transition(color);
+    
+    body.dark-mode & {
+      color: $dark-text-primary;
+    }
+  }
+  
+  form {
+    @include flex-column;
+    gap: $spacing-lg;
+  }
+  
+  input[type="text"],
+  input[type="email"],
+  input[type="password"] {
+    @include input-base;
+    padding: $spacing-lg;
+    font-size: $font-size-lg;
+  }
+  
+  button[type="submit"] {
+    padding: $spacing-lg;
+    @include gradient-primary;
+    color: $color-white;
+    border: none;
+    border-radius: $border-radius-md;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    cursor: pointer;
+    @include hover-lift;
+    
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+  }
+}
+
+// Auth errors
+.auth-error {
+  background: color.scale($color-danger, $lightness: -20%);
+  color: color.scale($color-danger, $lightness: 60%);
+  padding: $spacing-md $spacing-lg;
+  border-radius: $border-radius-md;
+  font-size: $font-size-sm;
+  border: $border-width solid $color-danger;
+  
+  body.dark-mode & {
+    background: opacity($color-danger, 0.2);
+    border-color: $color-danger;
+  }
+}
+
+// Remember me checkbox
+.auth-remember {
+  @include flex-center;
+  justify-content: flex-start;
+  gap: $spacing-sm;
+  
+  label {
+    @include flex-center;
+    gap: $spacing-sm;
+    cursor: pointer;
+    font-size: $font-size-base;
+    
+    input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+  }
+}
+
+// Divider
+.auth-divider {
+  position: relative;
+  text-align: center;
+  margin: $spacing-2xl 0;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: $border-width;
+    background: $light-border;
+    
+    body.dark-mode & {
+      background: $dark-border;
+    }
+  }
+  
+  span {
+    position: relative;
+    background: $light-bg-container;
+    padding: 0 $spacing-md;
+    color: $light-text-muted;
+    font-size: $font-size-sm;
+    
+    body.dark-mode & {
+      background: $dark-bg-container;
+      color: $dark-text-secondary;
+    }
+  }
+}
+
+// OAuth buttons
+.auth-oauth {
+  @include flex-column;
+  gap: $spacing-md;
+}
+
+.btn-oauth {
+  @include flex-center;
+  gap: $spacing-md;
+  padding: $spacing-md $spacing-lg;
+  border: $border-width-thick solid $light-border;
+  border-radius: $border-radius-md;
+  background: $color-white;
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+  cursor: pointer;
+  @include smooth-transition(all);
+  
+  body.dark-mode & {
+    background: $dark-bg-secondary;
+    border-color: $dark-border;
+    color: $dark-text-primary;
+  }
+  
+  &:hover:not(:disabled) {
+    border-color: $color-primary;
+    transform: translateY(-2px);
+  }
+  
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  svg {
+    flex-shrink: 0;
+  }
+}
+
+// Switch between login/register
+.auth-switch {
+  margin-top: $spacing-2xl;
+  padding-top: $spacing-xl;
+  border-top: $border-width solid $light-border;
+  
+  body.dark-mode & {
+    border-top-color: $dark-border;
+  }
+  
+  p {
+    margin: 0;
+    color: $light-text-muted;
+    font-size: $font-size-base;
+    
+    body.dark-mode & {
+      color: $dark-text-secondary;
+    }
+  }
+}
+
+.auth-link {
+  @include button-reset;
+  color: $color-primary;
+  font-weight: $font-weight-semibold;
+  @include smooth-transition(all);
+  
+  &:hover {
+    text-decoration: underline;
+    color: $color-primary-dark;
+  }
+  
+  body.dark-mode & {
+    color: $color-purple;
+    
+    &:hover {
+      color: color.scale($color-purple, $lightness: 10%);
+    }
+  }
+}

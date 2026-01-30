@@ -1,0 +1,55 @@
+// ============================================
+// BASE - ChattyChat
+// ============================================
+
+@use '../utils' as *;
+
+
+body {
+  background: $light-bg-body;
+  height: 100vh;
+  overflow: hidden;
+  @include smooth-transition(background);
+  
+  &.dark-mode {
+    background: $dark-bg-body;
+    color:$dark-text-primary;
+  }
+}
+
+.app {
+  height: 100vh;
+  @include flex-column;
+  
+  &--logged {
+    padding: 0;
+  }
+  
+  &--login {
+    @include flex-center;
+    padding: $spacing-xl;
+  }
+}
+
+// Main content area (header + content + footer)
+.app-main {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+// Content wrapper (sidebars + chat)
+.app-content {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+}
+.channels__todo {
+  padding: 20px; 
+  margin: 20px; 
+  background: rgba(102, 126, 234, 0.1); 
+  border-radius: 8px; 
+  font-size: 14px; 
+  color: rgb(102, 126, 234);
+}

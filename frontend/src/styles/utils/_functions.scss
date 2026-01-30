@@ -1,0 +1,37 @@
+// ============================================
+// FUNCTIONS - ChattyChat
+// ============================================
+@use 'sass:map';
+@use '../utils/variables' as *;
+
+
+// ============================================
+// SPACING CALCULATOR
+// ============================================
+@function spacing($multiplier) {
+    @return $spacing-sm * $multiplier;
+  }
+  
+  // ============================================
+  // OPACITY
+  // ============================================
+  @function opacity($color, $opacity) {
+    @return rgba($color, $opacity);
+  }
+  
+  // ============================================
+  // Z-INDEX MANAGEMENT
+  // ============================================
+
+
+  @function z($layer) {
+    $z-layers: (
+      'base': 1,
+      'dropdown': $z-index-dropdown,
+      'modal': $z-index-modal,
+      'tooltip': $z-index-tooltip,
+      'notification': $z-index-notification
+    );
+    
+    @return map.get($z-layers, $layer);
+  }

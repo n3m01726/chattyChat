@@ -1,0 +1,358 @@
+// ============================================
+// SIDEBAR LAYOUT - ChattyChat
+// ============================================
+@use 'sass:color';
+@use '../utils' as *;
+
+
+.sidebar {
+    background: color.scale($light-bg-container, $lightness: 3%);
+    border-right: $border-width solid $light-border;
+    @include flex-column;
+    position: relative;
+    @include smooth-transition(all);
+    overflow: hidden;
+    
+    body.dark-mode & {
+      background: color.scale($dark-bg-container, $lightness: -2%);
+      border-right-color: $dark-border;
+    }
+    
+    // Variants
+    &--left {
+      border-right: $border-width solid $light-border;
+      
+      body.dark-mode & {
+        border-right-color: $dark-border;
+      }
+    }
+    
+    &--right {
+      border-left: $border-width solid $light-border;
+      border-right: none;
+      
+      body.dark-mode & {
+        border-left-color: $dark-border;
+      }
+    }
+    
+    // States
+    &--collapsed {
+      width: 0 !important;
+      min-width: 0 !important;
+      border: none;
+    }
+    
+    // Header
+    &__header {
+      padding: $spacing-lg $spacing-xl;
+      border-bottom: $border-width solid $light-border;
+      @include flex-between;
+      flex-shrink: 0;
+      
+      body.dark-mode & {
+        border-bottom-color: $dark-border;
+      }
+      
+      h3 {
+        margin: 0;
+        font-size: $font-size-lg;
+        font-weight: $font-weight-semibold;
+      }
+    }
+    
+    &__close {
+      @include button-reset;
+      @include flex-center;
+      border-radius: $border-radius-md;
+      color: $light-text-muted;
+      @include smooth-transition(all);
+      
+      &:hover {
+        background: $light-bg-messages;
+        color: $light-text-primary;
+        
+        body.dark-mode & {
+          background: $dark-bg-messages;
+          color: $dark-text-primary;
+        }
+      }
+    }
+
+    &__pin {
+      @include button-reset;
+      @include flex-center;
+      border-radius: $border-radius-md;
+      color: $light-text-muted;
+      @include smooth-transition(all);
+      
+      &:hover {
+        background: $light-bg-messages;
+        color: $light-text-primary;
+        
+        body.dark-mode & {
+          background: $dark-bg-messages;
+          color: $dark-text-primary;
+        }
+      }
+    }
+    
+    // Search
+    &__search {
+      padding: $spacing-md $spacing-xl;
+      border-bottom: $border-width solid $light-border;
+      flex-shrink: 0;
+      
+      body.dark-mode & {
+        border-bottom-color: $dark-border;
+      }
+      
+      input {
+        width: 100%;
+        @include input-base;
+        padding: $spacing-sm $spacing-md;
+        font-size: $font-size-sm;
+      }
+    }
+    
+    // Content
+    &__content {
+      flex: 1;
+      overflow-y: auto;
+      @include custom-scrollbar($color-gray-100, $color-gray-300, $color-gray-400);
+      
+      body.dark-mode & {
+        @include custom-scrollbar($dark-bg-container, $dark-border-secondary, #5a5a72);
+      }
+    }
+    
+    // Resize handle
+    &__resize-handle {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: $sidebar-handle-width;
+      cursor: col-resize;
+      background: transparent;
+      z-index: 10;
+      @include smooth-transition(background);
+      
+      &:hover,
+      &--dragging {
+        background: $color-primary;
+      }
+      
+      &--left {
+        right: 0;
+      }
+      
+      &--right {
+        left: 0;
+      }
+    }
+  }
+  
+  // ============================================
+  // MEMBERS SIDEBAR (Right)
+  // ============================================
+  
+  .members {
+    &__section {
+      margin-bottom: $spacing-lg;
+      
+      &-header {
+        padding: $spacing-md $spacing-xl;
+        @include flex-between;
+        @include text-uppercase;
+        font-size: $font-size-xs;
+        font-weight: $font-weight-semibold;
+        color: $light-text-muted;
+        
+        body.dark-mode & {
+          color: $dark-text-secondary;
+        }
+      }
+      
+      &-count {
+        background: $light-bg-messages;
+        padding: 2px $spacing-sm;
+        border-radius: $border-radius-sm;
+        
+        body.dark-mode & {
+          background: $dark-bg-messages;
+        }
+      }
+    }
+    
+    &__list {
+      padding: 0 $spacing-md;
+    }
+  }
+  
+  .member-item {
+    @include flex-center;
+    gap: $spacing-md;
+    padding: $spacing-sm $spacing-md;
+    border-radius: $border-radius-md;
+    cursor: pointer;
+    @include smooth-transition(all);
+    position: relative;
+    
+    &:hover {
+      background: $light-bg-messages;
+      
+      body.dark-mode & {
+        background: $dark-bg-messages;
+      }
+    }
+    
+    &__avatar {
+      position: relative;
+      flex-shrink: 0;
+    }
+    
+    &__status-indicator {
+      position: absolute;
+      bottom: -2px;
+      right: -2px;
+      width: 12px;
+      height: 12px;
+      border-radius: $border-radius-full;
+      border: 2px solid $light-bg-container;
+      
+      body.dark-mode & {
+        border-color: $dark-bg-container;
+      }
+      
+      &--online { background: $color-success; }
+      &--away { background: $color-warning; }
+      &--busy { background: $color-danger; }
+      &--offline { background: $color-gray-400; }
+    }
+    
+    &__info {
+      flex: 1;
+      min-width: 0;
+    }
+    
+    &__name {
+      font-weight: $font-weight-semibold;
+      font-size: $font-size-md;
+      @include text-truncate;
+    }
+    
+    &__status-text {
+      font-size: $font-size-sm;
+      color: $light-text-muted;
+      @include text-truncate;
+      
+      body.dark-mode & {
+        color: $dark-text-secondary;
+      }
+    }
+    
+    &__badge {
+      background: $color-primary;
+      color: $color-white;
+      padding: 2px $spacing-sm;
+      border-radius: $border-radius-sm;
+      font-size: $font-size-xs;
+      font-weight: $font-weight-semibold;
+      
+      body.dark-mode & {
+        background: $color-purple;
+      }
+    }
+    
+    &__actions {
+      opacity: 0;
+      @include flex-center;
+      gap: $spacing-xs;
+      @include smooth-transition(opacity);
+    }
+    
+    &:hover &__actions {
+      opacity: 1;
+    }
+    
+    &__action-btn {
+      @include button-reset;
+      width: 28px;
+      height: 28px;
+      @include flex-center;
+      border-radius: $border-radius-sm;
+      color: $light-text-muted;
+      @include smooth-transition(all);
+      
+      &:hover {
+        background: $light-border;
+        color: $light-text-primary;
+        
+        body.dark-mode & {
+          background: $dark-border;
+          color: $dark-text-primary;
+        }
+      }
+    }
+  }
+  
+  // ============================================
+  // CHANNELS SIDEBAR (Left)
+  // ============================================
+  
+  .channels {
+    &__list {
+      padding: $spacing-md;
+    }
+  }
+  
+  .channel-item {
+    @include flex-center;
+    gap: $spacing-md;
+    padding: $spacing-sm $spacing-md;
+    border-radius: $border-radius-md;
+    cursor: pointer;
+    @include smooth-transition(all);
+    
+    &:hover {
+      background: $light-bg-messages;
+      
+      body.dark-mode & {
+        background: $dark-bg-messages;
+      }
+    }
+    
+    &--active {
+      background: $color-primary;
+      color: $color-white;
+      
+      &:hover {
+        background: $color-primary-dark;
+      }
+    }
+    
+    &__icon {
+      font-size: $font-size-lg;
+      flex-shrink: 0;
+    }
+    
+    &__name {
+      flex: 1;
+      font-weight: $font-weight-medium;
+      font-size: $font-size-base;
+      @include text-truncate;
+    }
+    
+    &__unread {
+      background: $color-danger;
+      color: $color-white;
+      padding: 2px $spacing-sm;
+      border-radius: $border-radius-full;
+      font-size: $font-size-xs;
+      font-weight: $font-weight-semibold;
+      min-width: 20px;
+      text-align: center;
+    }
+  }
+  
+  

@@ -1,0 +1,136 @@
+// ============================================
+// FILE UPLOADER FEATURE - ChattyChat
+// ============================================
+
+@use '../utils' as *;
+
+
+.attachment-uploader {
+    &__overlay {
+      @include modal-overlay;
+    }
+    
+    &__modal {
+      background: $light-bg-container;
+      border-radius: $border-radius-xl;
+      width: 90%;
+      max-width: 500px;
+      @include slide-up;
+      
+      body.dark-mode & {
+        background: $dark-bg-container;
+      }
+    }
+  }
+  
+  .attachment {
+    &__header {
+      @include flex-between;
+      padding: $spacing-xl;
+      border-bottom: $border-width solid $light-border;
+      
+      body.dark-mode & {
+        border-bottom-color: $dark-border;
+      }
+      
+      h3 {
+        margin: 0;
+        @include flex-center;
+        gap: $spacing-sm;
+      }
+    }
+    
+    &__body {
+      padding: $spacing-xl;
+    }
+    
+    &__actions {
+      margin-top: $spacing-xl;
+      display: flex;
+      gap: $spacing-md;
+      justify-content: flex-end;
+    }
+  }
+  
+  .file-drop-zone {
+    display: block;
+    border: $border-width-thick dashed $light-border;
+    border-radius: $border-radius-lg;
+    padding: $spacing-3xl;
+    text-align: center;
+    cursor: pointer;
+    @include smooth-transition(all);
+    
+    &:hover {
+      border-color: $color-primary;
+      background: opacity($color-primary, 0.05);
+    }
+    
+    body.dark-mode & {
+      border-color: $dark-border-secondary;
+      
+      &:hover {
+        border-color: $color-primary;
+        background: opacity($color-primary, 0.1);
+      }
+    }
+  }
+  
+  .drop-zone {
+    &__content {
+      @include flex-column;
+      align-items: center;
+      gap: $spacing-md;
+    }
+    
+    &__icon {
+      font-size: 48px;
+    }
+  }
+  
+  .file-preview {
+    position: relative;
+    text-align: center;
+    
+    img, video {
+      max-width: 100%;
+      max-height: 300px;
+      border-radius: $border-radius-md;
+    }
+  }
+  
+  .btn-remove {
+    margin-top: $spacing-md;
+    padding: $spacing-sm $spacing-lg;
+    background: $color-danger;
+    color: $color-white;
+    border: none;
+    border-radius: $border-radius-md;
+    cursor: pointer;
+    
+    &:hover {
+      background: $color-danger-dark;
+    }
+  }
+  
+  .expiration {
+    &-selector {
+      margin-top: $spacing-xl;
+      @include flex-column;
+      gap: $spacing-sm;
+      
+      label {
+        font-weight: $font-weight-semibold;
+        font-size: $font-size-base;
+      }
+      
+      select {
+        @include input-base;
+      }
+    }
+    
+    &-notice {
+      color: $color-warning;
+      font-size: $font-size-sm;
+    }
+  }

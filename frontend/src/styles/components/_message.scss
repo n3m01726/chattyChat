@@ -1,0 +1,287 @@
+// ============================================
+// MESSAGE COMPONENT - ChattyChat
+// ============================================
+
+@use '../utils' as *;
+
+
+.message {
+    margin-bottom: $spacing-xl;
+    @include slide-up(0.3s);
+    clear: both;
+    
+    // Content wrapper
+    &__content {
+      display: flex;
+      gap: $spacing-md;
+      align-items: flex-start;
+    }
+    
+    // Bubble
+    &__bubble {
+      flex: 1;
+      max-width: $max-message-width;
+    }
+    
+    // Header
+    &__header {
+      display: flex;
+      gap: $spacing-md;
+      align-items: center;
+      margin-bottom: $spacing-xs;
+    }
+    
+    // Username
+    &__username {
+      font-weight: $font-weight-semibold;
+      font-size: $font-size-base;
+      
+      &--clickable {
+        cursor: pointer;
+        @include hover-opacity;
+      }
+    }
+    
+    // Time
+    &__time {
+      font-size: $font-size-sm;
+      color: $light-text-secondary;
+      
+      body.dark-mode & {
+        color: $dark-text-secondary;
+      }
+    }
+    
+    // Text
+    &__text {
+      background: $light-bg-container;
+      padding: $spacing-md $spacing-lg;
+      border-radius: $border-radius-lg;
+      line-height: $line-height-base;
+      box-shadow: $shadow-md;
+      word-wrap: break-word;
+      @include smooth-transition(all);
+      
+      body.dark-mode & {
+        background: $dark-bg-secondary;
+        color: $dark-text-primary;
+      }
+    }
+    
+    // Markdown content
+    &__markdown {
+      line-height: $line-height-relaxed;
+      
+      h1, h2, h3 {
+        margin: $spacing-sm 0 $spacing-xs 0;
+        font-weight: $font-weight-semibold;
+      }
+      
+      p {
+        margin: $spacing-xs 0;
+      }
+      
+      code {
+        background: opacity($color-black, 0.1);
+        padding: 2px 6px;
+        border-radius: $border-radius-sm;
+        font-family: $font-family-mono;
+        font-size: $font-size-sm;
+        
+        body.dark-mode & {
+          background: opacity($color-white, 0.1);
+        }
+      }
+      
+      pre {
+        background: opacity($color-black, 0.05);
+        padding: $spacing-md;
+        border-radius: $border-radius-md;
+        overflow-x: auto;
+        margin: $spacing-sm 0;
+        
+        body.dark-mode & {
+          background: opacity($color-white, 0.05);
+        }
+      }
+      
+      a {
+        color: $color-primary;
+        text-decoration: underline;
+        
+        body.dark-mode & {
+          color: $color-purple;
+        }
+      }
+    }
+    
+    // GIF attachment
+    &__gif {
+      margin-top: $spacing-sm;
+      border-radius: $border-radius-md;
+      overflow: hidden;
+      max-width: 300px;
+      
+      img {
+        width: 100%;
+        display: block;
+      }
+    }
+    
+    // File attachment
+    &__attachment {
+      margin-top: $spacing-sm;
+      border-radius: $border-radius-md;
+      overflow: hidden;
+      max-width: 400px;
+      
+      img, video {
+        width: 100%;
+        display: block;
+        border-radius: $border-radius-md;
+      }
+    }
+    
+    &__attachment-expires {
+      display: block;
+      margin-top: $spacing-xs;
+      color: $light-text-secondary;
+      font-size: $font-size-xs;
+      
+      body.dark-mode & {
+        color: $dark-text-secondary;
+      }
+    }
+    
+    &__attachment-expired {
+      padding: $spacing-sm $spacing-md;
+      background: opacity($color-black, 0.05);
+      border-radius: $border-radius-md;
+      color: $light-text-secondary;
+      font-size: $font-size-sm;
+      margin-top: $spacing-sm;
+      
+      body.dark-mode & {
+        background: opacity($color-white, 0.05);
+        color: $dark-text-secondary;
+      }
+    }
+    
+    // Actions
+    &__actions {
+      margin-top: $spacing-sm;
+      display: flex;
+      gap: $spacing-sm;
+      align-items: center;
+    }
+    
+    // Own message modifier
+    &--own {
+      .message__content {
+        flex-direction: row-reverse;
+      }
+      
+      .message__bubble {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+      }
+      
+      .message__header {
+        flex-direction: row-reverse;
+      }
+      
+      .message__text {
+        @include gradient-primary;
+        color: $color-white;
+      }
+      
+      .message__actions {
+        justify-content: flex-end;
+      }
+    }
+    
+    // System message modifier
+    &--system {
+      text-align: center;
+      margin: $spacing-md 0;
+      clear: both;
+      width: 100%;
+      display: block;
+      
+      .message__text {
+        display: inline-block;
+        background: opacity($color-black, 0.05);
+        padding: $spacing-sm $spacing-lg;
+        border-radius: $border-radius-3xl;
+        font-size: $font-size-sm;
+        color: $light-text-muted;
+        
+        body.dark-mode & {
+          background: opacity($color-white, 0.1);
+          color: $dark-text-secondary;
+        }
+      }
+    }
+  }
+  
+  // Message actions (delete, etc.)
+  .message-actions {
+    &__delete {
+      background: transparent;
+      border: $border-width solid opacity($color-danger, 0.3);
+      color: $color-danger;
+      padding: $spacing-xs $spacing-sm;
+      border-radius: $border-radius-sm;
+      cursor: pointer;
+      font-size: $font-size-sm;
+      opacity: 0.6;
+      @include smooth-transition(all);
+      
+      &:hover {
+        opacity: 1;
+        background: opacity($color-danger, 0.1);
+      }
+    }
+    
+    &__delete-confirm {
+      display: flex;
+      gap: $spacing-sm;
+      align-items: center;
+      font-size: $font-size-sm;
+      
+      span {
+        color: $color-danger;
+        font-weight: $font-weight-semibold;
+      }
+    }
+    
+    &__confirm,
+    &__cancel {
+      padding: $spacing-xs $spacing-md;
+      border: none;
+      border-radius: $border-radius-sm;
+      cursor: pointer;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-semibold;
+      @include smooth-transition(all);
+    }
+    
+    &__confirm {
+      background: $color-danger;
+      color: $color-white;
+      
+      &:hover {
+        background: $color-danger-dark;
+      }
+    }
+    
+    &__cancel {
+      background: $color-gray-700;
+      color: $color-white;
+      
+      &:hover {
+        background: $color-gray-800;
+      }
+    }
+  }

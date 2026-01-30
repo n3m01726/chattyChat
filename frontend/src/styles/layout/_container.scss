@@ -1,0 +1,35 @@
+// ============================================
+// CONTAINER LAYOUT - ChattyChat
+// ============================================
+
+@use '../utils' as *;
+
+
+.chat-container {
+  flex: 1;
+  @include flex-column;
+  overflow: hidden;
+  max-width: $container-max-width;
+  width: 100%;
+  margin: 0 auto;
+  background: $light-bg-container;
+  @include smooth-transition(background);
+  
+  body.dark-mode & {
+    background: $dark-bg-container;
+  }
+}
+
+.messages-container {
+  flex: 1;
+  overflow-y: auto;
+  padding: $spacing-xl;
+  background: $light-bg-messages;
+  @include smooth-transition(background);
+  @include custom-scrollbar($color-gray-100, $color-gray-300, $color-gray-400);
+  
+  body.dark-mode & {
+    background: $dark-bg-messages;
+    @include custom-scrollbar($dark-bg-container, $dark-border-secondary, #5a5a72);
+  }
+}

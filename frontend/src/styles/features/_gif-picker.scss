@@ -1,0 +1,137 @@
+// ============================================
+// GIF PICKER FEATURE - ChattyChat
+// ============================================
+
+@use '../utils' as *;
+
+
+.gif-picker {
+    &__overlay {
+      @include modal-overlay;
+    }
+    
+    &__modal {
+      background: $light-bg-container;
+      border-radius: $border-radius-xl;
+      width: 90%;
+      max-width: 600px;
+      max-height: 80vh;
+      @include flex-column;
+      @include slide-up;
+      
+      body.dark-mode & {
+        background: $dark-bg-container;
+      }
+    }
+    
+    &__header {
+      @include flex-between;
+      padding: $spacing-xl;
+      border-bottom: $border-width solid $light-border;
+      
+      body.dark-mode & {
+        border-bottom-color: $dark-border;
+      }
+      
+      h3 {
+        margin: 0;
+      }
+    }
+    
+    &__footer {
+      padding: $spacing-md $spacing-xl;
+      text-align: center;
+      border-top: $border-width solid $light-border;
+      
+      body.dark-mode & {
+        border-top-color: $dark-border;
+      }
+      
+      small {
+        color: $light-text-secondary;
+        font-size: $font-size-xs;
+        
+        body.dark-mode & {
+          color: $dark-text-secondary;
+        }
+      }
+    }
+  }
+  
+  .gif-search-form {
+    display: flex;
+    gap: $spacing-sm;
+    padding: $spacing-lg $spacing-xl;
+    border-bottom: $border-width solid $light-border;
+    
+    body.dark-mode & {
+      border-bottom-color: $dark-border;
+    }
+    
+    input {
+      flex: 1;
+      padding: $spacing-md $spacing-lg;
+      border: $border-width-thick solid $light-border;
+      border-radius: $border-radius-md;
+      font-size: $font-size-base;
+      
+      body.dark-mode & {
+        background: $dark-bg-secondary;
+        border-color: $dark-border-secondary;
+        color: $dark-text-primary;
+      }
+    }
+    
+    button {
+      padding: $spacing-md $spacing-lg;
+      background: $color-primary;
+      color: $color-white;
+      border: none;
+      border-radius: $border-radius-md;
+      cursor: pointer;
+      font-size: $font-size-base;
+      font-weight: $font-weight-semibold;
+      
+      &:hover {
+        background: $color-primary-dark;
+      }
+    }
+  }
+  
+  .gif-grid {
+    flex: 1;
+    overflow-y: auto;
+    padding: $spacing-xl;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: $spacing-md;
+    align-content: start;
+  }
+  
+  .gif-item {
+    cursor: pointer;
+    border-radius: $border-radius-md;
+    overflow: hidden;
+    @include transition(transform $transition-fast);
+    
+    &:hover {
+      transform: scale(1.05);
+    }
+    
+    img {
+      width: 100%;
+      display: block;
+    }
+  }
+  
+  .gif-loading,
+  .gif-empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: $spacing-3xl;
+    color: $light-text-secondary;
+    
+    body.dark-mode & {
+      color: $dark-text-secondary;
+    }
+  }
