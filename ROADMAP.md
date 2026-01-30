@@ -1,41 +1,40 @@
 # 🗺️ Roadmap
 
-## ✅ DONE
-
 ### 🧱 Architecture
 - Frontend : React (Vite), Socket.io-client, CSS pur
 - Backend : Node.js, Express, Socket.io
 - Base de données : SQLite (better-sqlite3)
 
 ### 💬 Chat & UX
-- Chat temps réel avec historique persistant
-- Messages enrichis :
-  - Markdown
-  - GIFs (Giphy)
-  - Images / vidéos avec expiration
-- Suppression de messages (par l’auteur)
-- Indicateur "en train d’écrire"
-- Dark mode avec persistance
+~~- ~~Chat temps réel avec historique persistant~~
+~~- ~~Messages enrichis :~~
+  ~~- Markdown~~
+  ~~- GIFs (Giphy)~~
+  ~~- Images / vidéos avec expiration~~
+~~- Suppression de messages (par l’auteur)~~
+~~- Indicateur "en train d’écrire"~~
+~~- Dark mode avec persistance~~
+~~- Mentions `@username` avec notifications~~
 
 ### 👤 Profils utilisateurs
-- Avatar
-- Banner
-- Bio
-- Pronouns
-- Couleur personnalisée
-- Timezone
+~~- Avatar~~
+~~- Banner~~
+~~- Bio~~
+~~- Pronouns~~
+~~- Couleur personnalisée~~
+~~- Timezone~~
 
 ### 🟢 Présence & navigation
-- Statuts utilisateurs : online / away / busy / offline
-- Sidebar utilisateurs avec statuts **[DONE]**
-- Sidebar multi-salons **[DONE]**
+~~- Statuts utilisateurs : online / away / busy / offline~~
+~~- Sidebar utilisateurs avec statuts~~
+~~- Sidebar multi-salons~~
 
 ---
 
 ## 🚧 TODO (prochaines releases)
 
 ### 🔔 Communication
-- Mentions `@username` avec notifications
+
 - Notifications desktop
 - Système de DM (1-to-1)
 
@@ -49,9 +48,7 @@
 - Recherche dans l’historique
 - Possibilité d'épingler des messages
 
-### 😄 Interaction
-- Reactions sur messages (👍 ❤️ 😂)
-- Emojis custom
+
 
 ### 🎨 UI / Thèmes
 - Toggle clair / sombre (light / dark)
@@ -62,9 +59,17 @@
 - Anti-spam basique
 - 2FA pour les comptes
 
-### 🔑 Authentification
+
+### 😄 Interaction
+- Reactions sur messages (👍 ❤️ 😂)
+- Emojis custom
+- Lost password
+- Legacy login with nickname only (for dev purposes) 
 - Last Login with avatar
-- Login Email / Password
+
+
+### 🔑 Authentification
+- ~~ Login Email / Password ~~
 - Login Google
 - Login Discord
 
