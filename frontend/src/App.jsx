@@ -1,6 +1,7 @@
 // App.jsx
 import React, { useState, useEffect, useRef } from 'react';
-import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { useAuth } from './contexts/useAuth';
+import { AuthProvider } from './contexts/AuthContext';
 import { LoginScreen } from './features/auth/LoginScreen';
 import { RegisterScreen } from './features/auth/RegisterScreen';
 import { ChatContainer } from './features/chat/ChatContainer';
@@ -53,7 +54,7 @@ function AppContent() {
       joinChat(user.username);
       loadUserProfile(user.username);
       loadMembers();
-      document.title = `💬 ${user.username} - Chat`;
+      document.title = `💬 ${user.username} - chattyChat [BETA]`;
     }
   }, [user]);
 

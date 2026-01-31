@@ -6,7 +6,7 @@
 
 
 body {
-  background: $light-bg-body;
+  background: url('/toa-heftiba-l_ExpFwwOEg-unsplash.jpg') no-repeat center center fixed;
   height: 100vh;
   overflow: hidden;
   @include smooth-transition(background);

@@ -144,9 +144,9 @@
   .message {
     &__mention {
       display: inline;
-      background: opacity($color-primary, 0.1);
-      color: $color-primary;
-      padding: 2px 4px;
+      background: opacity($color-primary, 90%);
+      color: white;
+      padding: 4px 4px;
       border-radius: $border-radius-sm;
       font-weight: $font-weight-semibold;
       
