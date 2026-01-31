@@ -93,7 +93,7 @@
     
     body.dark-mode & {
       border-color: $dark-border-secondary;
-      
+      color: $dark-text-primary;
       &:hover {
         background: opacity($color-white, 0.05);
       }

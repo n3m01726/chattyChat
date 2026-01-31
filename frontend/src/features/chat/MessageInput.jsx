@@ -4,7 +4,7 @@ import { GifPicker } from './GifPicker';
 import { AttachmentUploader } from './AttachmentUploader';
 import { MentionAutocomplete } from './MentionAutocomplete';
 import { TYPING_TIMEOUT, MAX_MESSAGE_LENGTH } from '../../utils/constants';
-import { Code, Image, ImagePlay, Send } from "lucide-react";
+import { Code, Image, ImagePlay, Send, Plus } from "lucide-react";
 
 /**
  * Formulaire d'envoi de message avec options enrichies + autocomplete mentions
@@ -217,6 +217,13 @@ export const MessageInput = ({
         )}
 
         <div className="input-toolbar">
+        <button
+            type="button"
+            className="toolbar-btn"
+            title=""
+          >
+            <Plus size={20} />
+          </button>
           <button
             type="button"
             className={`toolbar-btn ${useMarkdown ? 'active' : ''}`}

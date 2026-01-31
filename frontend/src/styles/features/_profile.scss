@@ -11,7 +11,7 @@
 
 .profile {
   &__banner {
-    height: 120px;
+    height: 180px;
     background-size: cover;
     background-position: center;
     border-radius: $border-radius-xl $border-radius-xl 0 0;
@@ -281,7 +281,7 @@
 }
 
 .upload-banner-btn {
-  top: $spacing-md;
+  top: $spacing-xl * 2;
   right: $spacing-md;
 }
 
@@ -297,7 +297,7 @@
 
 .upload-avatar-btn {
   bottom: 0;
-  right: 0;
+  right: 345px;
   width: 32px;
   height: 32px;
   border-radius: $border-radius-full;

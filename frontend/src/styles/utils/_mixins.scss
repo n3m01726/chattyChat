@@ -204,8 +204,7 @@
   @mixin card {
     background: $light-bg-container;
     border-radius: $border-radius-xl;
-    box-shadow: $shadow-xl;
-    
+        
     body.dark-mode & {
       background: $dark-bg-container;
     }

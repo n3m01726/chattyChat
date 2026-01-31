@@ -1,8 +1,12 @@
-// contexts/AuthContext.jsx
-import React, { createContext, useState, useEffect, useContext, useRef } from 'react';
+import React, {
+  createContext,
+  useState,
+  useEffect,
+  useRef
+} from 'react';
 import { SOCKET_URL } from '../utils/constants';
 
-const AuthContext = createContext(null);
+export const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -18,7 +22,7 @@ export const AuthProvider = ({ children }) => {
     if (hasCheckedAuth.current) return;
     hasCheckedAuth.current = true;
 
-    // Charger lastEmail
+    // Charger lastEmail depuis les cookies
     const cookies = document.cookie.split(';');
     const lastEmailCookie = cookies.find(c =>
       c.trim().startsWith('lastEmail=')
@@ -45,13 +49,10 @@ export const AuthProvider = ({ children }) => {
         }
       }
 
-      // Tentative de refresh UNIQUEMENT si un refresh token existe
       const hasRefreshToken = document.cookie.includes('refreshToken=');
       if (hasRefreshToken) {
         const refreshed = await refreshToken();
-        if (!refreshed) {
-          setUser(null);
-        }
+        if (!refreshed) setUser(null);
       } else {
         setUser(null);
       }
@@ -72,7 +73,6 @@ export const AuthProvider = ({ children }) => {
 
       if (!response.ok) return false;
 
-      // Revalider l’utilisateur après refresh
       const meResponse = await fetch(`${apiUrl}/api/auth/me`, {
         credentials: 'include'
       });
@@ -131,9 +131,36 @@ export const AuthProvider = ({ children }) => {
 
       setUser(data.user);
       setLastEmail(email);
+      saveLastLoginInfo(data.user);
+
       return { success: true, user: data.user };
     } catch (error) {
       console.error('Erreur connexion:', error);
+      return { success: false, error: 'Erreur serveur' };
+    }
+  };
+
+  const legacyLogin = async (username) => {
+    try {
+      const response = await fetch(`${apiUrl}/api/auth/legacy-login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username }),
+        credentials: 'include'
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        return { success: false, error: data.error };
+      }
+
+      setUser(data.user);
+      saveLastLoginInfo(data.user, true);
+
+      return { success: true, user: data.user, isLegacy: data.isLegacy };
+    } catch (error) {
+      console.error('Erreur legacy login:', error);
       return { success: false, error: 'Erreur serveur' };
     }
   };
@@ -151,14 +178,63 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const saveLastLoginInfo = (userData, isLegacy = false) => {
+    const lastLogin = {
+      username: userData.username,
+      email: userData.email || null,
+      isLegacy,
+      timestamp: Date.now()
+    };
+
+    localStorage.setItem('lastLogin', JSON.stringify(lastLogin));
+
+    if (userData.username) {
+      fetch(`${apiUrl}/api/users/${userData.username}`, {
+        credentials: 'include'
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success && data.profile?.avatar_url) {
+            localStorage.setItem(
+              'lastLogin',
+              JSON.stringify({
+                ...lastLogin,
+                avatarUrl: data.profile.avatar_url
+              })
+            );
+          }
+        })
+        .catch(err =>
+          console.error('Erreur chargement avatar:', err)
+        );
+    }
+  };
+
+  const getLastLoginInfo = () => {
+    try {
+      const saved = localStorage.getItem('lastLogin');
+      return saved ? JSON.parse(saved) : null;
+    } catch (error) {
+      console.error('Erreur lecture lastLogin:', error);
+      return null;
+    }
+  };
+
+  const clearLastLoginInfo = () => {
+    localStorage.removeItem('lastLogin');
+  };
+
   const value = {
     user,
     loading,
     lastEmail,
     register,
     login,
+    legacyLogin,
     logout,
-    checkAuth
+    checkAuth,
+    getLastLoginInfo,
+    clearLastLoginInfo
   };
 
   return (
@@ -166,12 +242,4 @@ export const AuthProvider = ({ children }) => {
       {children}
     </AuthContext.Provider>
   );
-};
-
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useAuth must be used within AuthProvider');
-  }
-  return context;
 };

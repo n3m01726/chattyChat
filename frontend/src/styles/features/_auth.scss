@@ -4,12 +4,11 @@
 @use 'sass:color';
 @use '../utils' as *;
 
-
 .login-screen {
   @include card;
   padding: $spacing-3xl;
   text-align: center;
-  max-width: 450px;
+  max-width: 850px;
   width: 100%;
   position: relative;
   
@@ -202,5 +201,88 @@
     &:hover {
       color: color.scale($color-purple, $lightness: 10%);
     }
+  }
+}
+
+// ============================================
+// LAST LOGIN CARD
+// ============================================
+.last-login-card {
+  @include flex-column;
+  align-items: center;
+  gap: $spacing-lg;
+  padding: $spacing-2xl;
+  background: $light-bg-messages;
+  border-radius: $border-radius-xl;
+  margin-bottom: $spacing-xl;
+  
+  body.dark-mode & {
+    background: $dark-bg-messages;
+  }
+  
+  &__avatar {
+    position: relative;
+  }
+  
+  &__info {
+    text-align: center;
+    
+    h3 {
+      margin: 0 0 $spacing-xs 0;
+      font-size: $font-size-xl;
+      font-weight: $font-weight-semibold;
+    }
+    
+    p {
+      margin: 0;
+      color: $light-text-muted;
+      font-size: $font-size-base;
+      
+      body.dark-mode & {
+        color: $dark-text-secondary;
+      }
+    }
+  }
+}
+
+// ============================================
+// BADGES
+// ============================================
+.badge {
+  display: inline-block;
+  padding: $spacing-xs $spacing-md;
+  border-radius: $border-radius-2xl;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  margin-top: $spacing-sm;
+  
+  &--ghost {
+    background: opacity($color-purple, 0.1);
+    color: $color-purple;
+    
+    body.dark-mode & {
+      background: opacity($color-purple, 0.2);
+      color: color.scale($color-purple, $lightness: 20%);
+    }
+  }
+}
+
+// ============================================
+// SUCCESS MESSAGE
+// ============================================
+.auth-success {
+  padding: $spacing-xl;
+  background: opacity($color-success, 0.1);
+  border: $border-width solid $color-success;
+  border-radius: $border-radius-md;
+  color: $color-success-dark;
+  
+  body.dark-mode & {
+    background: opacity($color-success, 0.2);
+  }
+  
+  p {
+    margin: 0;
+    line-height: $line-height-relaxed;
   }
 }

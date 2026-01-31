@@ -1,6 +1,6 @@
 // features/auth/RegisterScreen.jsx
 import React, { useState } from 'react';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth } from '../../contexts/useAuth';
 
 /**
  * Écran d'inscription avec email/password
